@@ -1,0 +1,26 @@
+
+\section{Introduction}
+
+The Science Data Model (SEM) specification is a machine-readable specification for the physical data model for the publicly released science data products of the LSST Project.
+Meanwhile the \DPDD  represents an "idealized" data model that cannot directly be used as a recipe for the construction of a physical database schema and is not a full, precise definition of a data model.
+It should be treated as a requirements document for the data model and schema rather than itself defining them. However will not cover the evlution of the DPDD in this note.
+
+
+\section {Science Data Model}
+{\bf from  \url{https://confluence.lsstcorp.org/display/DM/The+Science+Data+Model+and+its+Standardization}}
+
+he SDM is a realization of the DPDD; thus, viewing the DPDD as a requirements specification, the SDM is to be viewed as a design specification that must contain elements that formally satisfy every data item called for in the DPDD.  The SDM may contain additional elements beyond those required by the DPDD.  These may arise from more detailed algorithmic choices made in considering how to meet the DPDD's requirements, from considerations of meeting external standards such as IVOA data models or the CAOM2 data model, or from engineering considerations such as choices of how to map the DPDD onto a formal relational data model and whether it should be normalized or not.
+
+The SDM defines the data products to be served to science users through the LSST Science Platform (LSP), and it is therefore a requirement that the data model be realizable in the underlying data storage systems (e.g., in Qserv, where applicable) and handled by the LSP's data services (e.g., TAP/ADQL and the Butler) and by its user-facing components such as the Portal Aspect.
+
+The SDM must contain sufficient information for a physical SQL schema definition to be derived from it, given a choice of SQL flavor (e.g., MariaDB, Oracle, PostgreSQL).
+
+The SDM specification will be written in YAML.  The SDM must contain information that itemizes how it satisfies the DPDD requirements for the content of the data model.  For example, each SDM element that realizes a data item from the DPDD might contain a field that references the appropriate DPDD Identifier.
+
+Each element of the SDM must be described by a unique identifier ("SDM Identifier") that can be used programmatically in applications that consume the SDM YAML definition.  We expect that the "leaf nodes" in the name space of these identifiers will correspond directly to column names in generated database tables; it seems unnecessary to have yet another layer of indirection at this level.  Higher levels in the name space may not correspond exactly to database and/or table names, however; this has yet to be determined precisely.
+
+Software support will be provided for verifying that the SDM provides coverage for all the data items defined in the DPDD.  This should ultimately be subject to verification as part of a CI process.  In order to facilitate the introduction of the SDM language and software into DM, a transitional period should be supported during which a partially complete SDM can be used without triggering constant CI failures.
+
+The design of the SDM and its specification language should address the need to map the physical data model that derives from it to the catalog.schema.table name space of the ADQL 2.0 and TAP standards.  (Bear in mind that the way the term "catalog" is used in this context does not correspond to the intuitive sense of "astronomical catalog".)
+
+In addition to being able to be used to construct a database schema, the SDM specification must also include the information required to provide IVOA-oriented table and column metadata in query responses.  The system must support:
