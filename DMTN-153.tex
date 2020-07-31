@@ -47,8 +47,72 @@ This note attempts to describe what we mean be schema management, what we would 
 % Frequently for a technote we do not want a title page  uncomment this to remove the title page and changelog.
 % use \mkshorttitle to remove the extra pages
 
-% ADD CONTENT HERE
-% You can also use the \input command to include several content files.
+
+\section{Types of Schemas}
+
+\textbf{Abstract schema} --- DPDD (LSE-163). This describes the scientific content of the tables at a
+level of detail that the future-user can understand what types of measurements will be produced,
+without necessarily specifying the exact format of the resulting data. The line between these two
+levels of detail is inherently blurry; users look to the DPDD to evaluate if project plans are
+sufficient for their science, but the level of detail required for that evaluation sometimes
+requires describing implementation choices that may change.
+
+The abstract schema cannot by itself be realized in a concrete table; it lacks the full complement
+of columns, data type information, and unique column names, and thus requires further elaboration.
+
+\textbf{``Specification'' schemas} --- LDM-153. This is a schema that \textit{can} be physically
+realized, and it is designed to fulfill the needs of the DPDD's abstract schema. This schema is
+necessary both for sizing purposes, and as a ``goal'' that the pipelines teams can work to as they
+build and evolve the pipeline output files. The result of the construction project should be for the
+pipelines to produce data that fully realize this schema.
+
+Because changes to the ``specification'' schema potentially have impacts on multiple areas of DM (e.g.
+storage costs or science impacts), it is change-controlled at the DM-CCB level.
+
+
+\textbf{``Concrete'' schemas} --- e.g. HSC reprocessing schemas. These schemas \textit{are}
+physically realized; they are meant to describe data products that currently exist. These schemas
+must accurately reflect those data products, regardless of what is specified in the DPDD or LDM-153.
+They are not subject to change control since there is no project management impact that can be
+caused by any changes. Inaccuracies may cause different dependent services to break, but this is
+generally comparable in consequence to any other code breakage.
+
+
+\section{Management of Schemas}
+
+
+The DPDD is a project-level change-controlled document; procedures for modifying it are outside the
+scope of this document.
+
+The ``specification'' schema in LDM-153 should be updated whenever necessary to reflect any changes
+in DM's planned data products at the end of construction. Evolution of the LDM-153 schema is
+expected during construction as the pipelines evolve and the measurement outputs are better
+understood.
+
+LDM-153 is change-controlled by the DM-CCB, and its contents are generated from the baselineSchema.yaml file
+in the \texttt{sdm\_schemas} repository. Procedurally, \texttt{baselineSchema.yaml} should be
+treated like any other LaTeX input for a change controlled document: changes to it may be merged to
+master via a normal ticket, but are not ``official'' until an approved RFC releases a new version of
+the LDM document.
+
+The \texttt{hsc.yaml} schema in \texttt{sdm\_schemas} is a ``concrete'' schema that is not subject
+to change control, but the \texttt{ci\_hsc} integration tests verify that the outputs from that
+pipeline execution comply with the schema specified in \texttt{hsc.yaml}. This ensures that an
+up-to-date schema is always available, so that steps like loading an HSC reprocessing run into qserv
+do not require fixing up all the changes to the schema since the previous ingest.
+
+All other schemas in the \texttt{sdm\_schemas} repository are ``concrete'' schemas reflecting
+specific sets of data products; these may be edited as necessary by a normal ticket workflow.
+
+\textbf{TODO:} we only have one hsc.yaml, should we be creating more reprocessing-specific copies?
+I.e. one for each RC2 reprocessing and saving them in separate files in sdm\_schemas.
+
+\textbf{TODO:} should mention how felis is involved, but it's mostly as a definition for the schema
+yaml format and doesn't need to be the main focus.
+
+\textbf{TODO:} maybe describe how the pipeline's ``SDM standardization'' yaml file relates to these
+schemas? Some version of the Princeton whiteboard diagram?
+
 
 \appendix
 % Include all the relevant bib files.
