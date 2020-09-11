@@ -10,3 +10,7 @@ http
 p
 s
 A
+CREATE
+TABLE
+TABLEDATA
+SQL92
