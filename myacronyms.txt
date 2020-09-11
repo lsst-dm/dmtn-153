@@ -8,3 +8,5 @@
 
 SDM:Science Data Model
 DML:Data Manipulation Model
+UCD1:Unified Content Descriptor 1
+CAOM2:Common Astronomical Observation Model 2
