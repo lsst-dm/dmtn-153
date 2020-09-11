@@ -1,6 +1,7 @@
 
+
 \section{SDM requirements}\label{sec:sdm}
-The SDM must contain sufficient information for a physical SQL schema definition to be derived from it, given a choice of SQL flavor (e.g., MariaDB, Oracle, PostgreSQL).
+The SDM must contain sufficient information for a physical SQL schema definition to be derived from it, given a choice of SQL flavor (e.g., MariaDB, PostgreSQL).
 
 The SDM must contain information that itemizes how it satisfies the DPDD requirements for the content of the data model.  For example, each SDM element that realizes a data item from the DPDD might contain a field that references the appropriate DPDD Identifier.
 
@@ -23,7 +24,7 @@ In addition to being able to be used to construct a database schema, the SDM spe
 The SDM specification must include a data type definition for each column-like field.  This data type is intended to be used to derive several downstream data types involved in the physical instantiation and service of the data:
 
 \begin{itemize}
-\item     SQL database types consistent with the variety of actual database software used in LSST, which will include at least MariaDB and Oracle, may include PostgreSQL depending on the progress of PPDB development, and should also include the HyperSQL in-memory database used in the Portal Aspect of the LSP (in Firefly);
+\item     SQL database types consistent with the variety of actual database software used in LSST, which will include at least MariaDB and PostgreSQL depending on the progress of PPDB development, and should also include the HyperSQL in-memory database used in the Portal Aspect of the LSP (in Firefly);
     \item SQL92-based database types for use in the ADQL context;
     \item VOTable data types;
     \item text-based data formats for use when data model elements are represented as text, e.g., in the VOTable TABLEDATA format or in CSV;
